@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PALIGSAHAN 2024 - DP Blast</title>
+    <meta name="description" content="di man makita ya kay sa fb man i post ang link" />
+    <meta name="author" content="Robert Aaron A. Mantac" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(0deg, #5263ba, #dadbec);
+            color: #eee;
+            text-align: center;
+            overflow-x: hidden;
+        }
+        .container {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+            max-width: 900px;
+            margin: 20px auto;
+            box-sizing: border-box;
+            border-radius: 15px;
+            background-color: #033381;
+            border: 3px solid #EEC643;
+            align-items: center;
+        }
+        .left-column, .right-column {
+            flex: 1;
+            min-width: 280px;
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .left-column {
+            border-right: 2px solid #062661;
+        }
+        .right-column {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+        h1 {
+            color: #f8f8f8;
+            font-size: 1.8rem;
+            margin-bottom: 50px;
+            letter-spacing: 1px;
+            font-weight: 600;
+            text-shadow: 0 0 4px #EEC643, 0 0 6px #EEC643;
+        }
+        .form-group {
+            margin-bottom: 20px;
+            width: 100%;
+        }
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #ddd;
+        }
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            font-family: Poppins;
+            border: 1px solid #062661;
+            border-radius: 8px;
+            background-color: #062661;
+            color: #eee;
+            box-sizing: border-box;
+        }
+        .form-group select:focus {
+            border-color: #EEC643;
+            outline: none;
+        }
+        .form-group input[type="file"] {
+            position: absolute;
+            opacity: 0;
+            z-index: -1;
+        }
+        .custom-file-label {
+            display: inline-block;
+            padding: 12px;
+            font-size: 16px;
+            background-color: #062661;
+            color: #eee;
+            border: 1px solid #062661;
+            border-radius: 8px;
+            cursor: pointer;
+            width: 93%;
+            text-align: left;
+        }
+        .custom-file-label:hover {
+            background-color: #062661;
+            color: #eee;
+        }
+        .form-group button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-family: Poppins;
+            color: #fff;
+            background-color: #EEC643;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .form-group button:hover {
+            background-color: #b5942a;
+        }
+        .form-group button:active {
+            transform: scale(0.98);
+        }
+        #canvas {
+            background-color: #fff;
+            border: 4px solid #EEC643;
+            border-radius: 12px;
+            width: 300px;
+            height: 300px;
+        }
+        .download-group {
+            text-align: center;
+        }
+        .download-group button {
+            padding: 12px 24px;
+            font-size: 16px;
+            font-family: Poppins;
+            color: #fff;
+            background-color: #EEC643;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        .download-group button:hover {
+            background-color: #b5942a;
+        }
+        .download-group button:active {
+            transform: scale(0.98);
+        }
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+                padding: 10px;
+                gap: 20px;
+                align-items: center;
+            }
+            .left-column {
+                border-right: none;
+                border-bottom: 2px solid #EEC643;
+            }
+            .right-column {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+            }
+            #canvas {
+                width: 80vw;
+                height: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="left-column">
+            <h1>PALIGSAHAN 2024 - DP BLAST</h1>
+            <div class="form-group">
+                <label for="role">Select Your Delegation:</label>
+                <select id="role">
+                    <option value="7">Grade 7 - HERACLES</option>
+                    <option value="8">Grade 8 - SENTINELS</option>
+                    <option value="9">Grade 9 - SPARTANS</option>
+                    <option value="10">Grade 10 - LA DECIMA PHOENIX</option>
+                    <option value="11">Grade 11 - PURPURA VANGUARDS</option>
+                    <option value="12">Grade 12 - MAROON SAMURAI</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="photo-upload">Upload Your Photo:</label>
+                <input type="file" id="photo-upload" accept="image/*" />
+                <label for="photo-upload" class="custom-file-label">No file chosen</label>
+            </div>
+            <div class="form-group">
+                <button id="apply-frame">Apply Frame</button>
+            </div>
+        </div>
+        <div class="right-column">
+            <p>Click on the photo to adjust its size and position.</p>
+            <canvas id="canvas"></canvas>
+            <div class="download-group">
+                <button id="download">Download Your Design</button>
+            </div>
+        </div>
+    </div>
+    <p>Created by: Robert Aaron A. Mantac<br>8/29/2024<br><br>"*/Nag ubra website kay wko ila it watermark kng twibbonize :P"</p>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
+    <script>
+        const fileInput = document.getElementById('photo-upload');
+        const fileLabel = document.querySelector('.custom-file-label');
+    
+        fileInput.addEventListener('change', function() {
+            const customMessage = this.files[0] ? 'File selected!' : 'No file chosen';
+            fileLabel.textContent = customMessage;
+        });
+    
+        const canvas = new fabric.Canvas('canvas', { preserveObjectStacking: true });
+        const canvasSize = 300;
+        const resolutionScale = 4;
+    
+        canvas.setWidth(canvasSize);
+        canvas.setHeight(canvasSize);
+    
+        const framePaths = {
+            frame: {
+                '7': 'images/GRADE 7.png',
+                '8': 'images/GRADE 8.png',
+                '9': 'images/GRADE 9.png',
+                '10': 'images/GRADE 10.png',
+                '11': 'images/GRADE 11.png',
+                '12': 'images/GRADE 12.png'
+            }
+        };
+    
+        document.getElementById('apply-frame').addEventListener('click', () => {
+            const photoFile = document.getElementById('photo-upload').files[0];
+            const role = document.getElementById('role').value;
+            const frameUrl = framePaths['frame'][role];
+    
+            if (photoFile && frameUrl) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    fabric.Image.fromURL(event.target.result, (photo) => {
+                        canvas.clear();
+    
+                        const photoAspectRatio = photo.width / photo.height;
+                        const canvasAspectRatio = canvas.width / canvas.height;
+    
+                        // Adjust aspect ratio
+                        let scaleX, scaleY;
+                        if (photoAspectRatio > canvasAspectRatio) {
+                            scaleX = canvas.width / photo.width;
+                            scaleY = scaleX;
+                        } else {
+                            scaleY = canvas.height / photo.height;
+                            scaleX = scaleY;
+                        }
+    
+                        photo.set({
+                            scaleX: scaleX,
+                            scaleY: scaleY,
+                            left: (canvas.width - photo.width * scaleX) / 2,
+                            top: (canvas.height - photo.height * scaleY) / 2,
+                            selectable: true,
+                            evented: true
+                        });
+                        canvas.add(photo);
+    
+                        fabric.Image.fromURL(frameUrl, (frame) => {
+                            frame.set({
+                                selectable: false,
+                                evented: false,
+                                scaleX: canvas.width / frame.width,
+                                scaleY: canvas.height / frame.height
+                            });
+                            canvas.add(frame);
+                            frame.center();
+                            frame.sendToFront(); 
+                        });
+                    });
+                };
+                reader.readAsDataURL(photoFile);
+            } else {
+                alert('Please upload a photo and select both a theme and a role.');
+            }
+        });
+    
+        document.getElementById('download').addEventListener('click', () => {
+            const originalWidth = canvas.getWidth();
+            const originalHeight = canvas.getHeight();
+    
+            canvas.setWidth(canvasSize * resolutionScale);
+            canvas.setHeight(canvasSize * resolutionScale);
+            canvas.setZoom(resolutionScale);
+    
+            const dataURL = canvas.toDataURL('image/png');
+    
+            canvas.setWidth(originalWidth);
+            canvas.setHeight(originalHeight);
+            canvas.setZoom(1);
+    
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'DP-Blast-ni-berrttaa.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        });
+    </script>    
+</body>
+</html>
