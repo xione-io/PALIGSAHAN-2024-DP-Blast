@@ -303,22 +303,12 @@
             canvas.setHeight(originalHeight);
             canvas.setZoom(1);
     
-            const userConfirmation = confirm("This will open an external app to download your file. Do you want to continue?");
-    
-            if (userConfirmation) {
-        // Create a temporary link element for the download
             const link = document.createElement('a');
             link.href = dataURL;
             link.download = 'DP-Blast-ni-berrttaa.png';
-        
-        // Open the download link in a new tab to simulate the external app behavior
-            window.open(link.href, '_blank');
-
-        // Optionally, you can append the link to the DOM to trigger a download directly
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
-            }
         });
     </script>    
 </body>
