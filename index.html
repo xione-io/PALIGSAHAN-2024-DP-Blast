@@ -204,12 +204,9 @@
             <div class="download-group">
                 <button id="download">Download Your Design</button>
             </div>
-            <div class="form-group">
-                <button id="external-link">Open External Link</button>
-            </div>
         </div>
     </div>
-    <p>Created by: Robert Aaron A. Mantac<br>8/29/2024<br><br>"*/Nag ubra website kay wko ila it watermark kng twibbonize :P"</p>
+    <p>Created by: Robert Aaron A. Mantac<br>8/29/2024</p>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/5.2.4/fabric.min.js"></script>
     <script>
@@ -253,47 +250,66 @@
                         const photoAspectRatio = photo.width / photo.height;
                         const canvasAspectRatio = canvas.width / canvas.height;
     
+                        // Adjust aspect ratio
+                        let scaleX, scaleY;
                         if (photoAspectRatio > canvasAspectRatio) {
-                            photo.scaleToWidth(canvas.width);
+                            scaleX = canvas.width / photo.width;
+                            scaleY = scaleX;
                         } else {
-                            photo.scaleToHeight(canvas.height);
+                            scaleY = canvas.height / photo.height;
+                            scaleX = scaleY;
                         }
     
-                        canvas.centerObject(photo);
+                        photo.set({
+                            scaleX: scaleX,
+                            scaleY: scaleY,
+                            left: (canvas.width - photo.width * scaleX) / 2,
+                            top: (canvas.height - photo.height * scaleY) / 2,
+                            selectable: true,
+                            evented: true
+                        });
                         canvas.add(photo);
-                        canvas.sendToBack(photo);
     
                         fabric.Image.fromURL(frameUrl, (frame) => {
-                            frame.scaleToWidth(canvas.width);
+                            frame.set({
+                                selectable: false,
+                                evented: false,
+                                scaleX: canvas.width / frame.width,
+                                scaleY: canvas.height / frame.height
+                            });
                             canvas.add(frame);
-                            canvas.bringToFront(frame);
-                            canvas.renderAll();
+                            frame.center();
+                            frame.sendToFront(); 
                         });
                     });
                 };
                 reader.readAsDataURL(photoFile);
+            } else {
+                alert('Please upload a photo and select both a theme and a role.');
             }
         });
     
         document.getElementById('download').addEventListener('click', () => {
-            const link = document.createElement('a');
-            link.href = canvas.toDataURL({
-                format: 'png',
-                quality: 1.0,
-                multiplier: resolutionScale
-            });
-            link.download = 'DP_Blast_ni_bertaaa.png';
-            link.click();
-        });
+            const originalWidth = canvas.getWidth();
+            const originalHeight = canvas.getHeight();
     
-        document.getElementById('external-link').addEventListener('click', () => {
-            const url = 'https://www.example.com';
-            if (navigator.userAgent.match(/(Android|iPhone|iPad|iPod)/i)) {
-                window.open(url, '_system');
-            } else {
-                window.open(url, '_blank');
-            }
+            canvas.setWidth(canvasSize * resolutionScale);
+            canvas.setHeight(canvasSize * resolutionScale);
+            canvas.setZoom(resolutionScale);
+    
+            const dataURL = canvas.toDataURL('image/png');
+    
+            canvas.setWidth(originalWidth);
+            canvas.setHeight(originalHeight);
+            canvas.setZoom(1);
+    
+            const link = document.createElement('a');
+            link.href = dataURL;
+            link.download = 'DP-Blast-ni-berrttaa.png';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         });
-    </script>
+    </script>    
 </body>
 </html>
